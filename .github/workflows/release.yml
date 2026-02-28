@@ -22,6 +22,7 @@ env:
   SIMPLE_RELEASE: ${{ github.event.inputs.simple_release == 'true' || vars.SIMPLE_RELEASE == 'true' }}
 
 permissions:
+  issues: write
   contents: write
   packages: write
 
@@ -30,6 +31,12 @@ jobs:
   update-version:
     runs-on: ubuntu-latest
     steps:
+      - uses: jfrog-fastci/fastci@v0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          create_issues_from_insights: "true"
+          accept_terms: "yes"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -54,6 +61,12 @@ jobs:
   build-frontend:
     runs-on: ubuntu-latest
     steps:
+      - uses: jfrog-fastci/fastci@v0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          create_issues_from_insights: "true"
+          accept_terms: "yes"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -88,6 +101,12 @@ jobs:
     needs: [update-version, build-frontend]
     runs-on: ubuntu-latest
     steps:
+      - uses: jfrog-fastci/fastci@v0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          create_issues_from_insights: "true"
+          accept_terms: "yes"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
